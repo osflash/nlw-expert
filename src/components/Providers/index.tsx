@@ -4,6 +4,8 @@ import React from 'react'
 
 import * as Tooltip from '@radix-ui/react-tooltip'
 import { Toaster } from 'sonner'
+import { queryClient } from '~/services/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
 
 interface ProvidersProps {
   children: React.ReactNode
@@ -12,11 +14,13 @@ interface ProvidersProps {
 export const Providers: React.FC<ProvidersProps> = ({ children }) => {
   return (
     <>
-      <Tooltip.Provider>
-        <>{children}</>
-      </Tooltip.Provider>
+      <QueryClientProvider client={queryClient}>
+        <Tooltip.Provider>
+          <>{children}</>
+        </Tooltip.Provider>
 
-      <Toaster richColors />
+        <Toaster richColors />
+      </QueryClientProvider>
     </>
   )
 }

@@ -1,7 +1,7 @@
 /** @type {import('eslint').Linter.BaseConfig} */
 const eslintConfig = {
   extends: ['next/core-web-vitals', 'prettier'],
-  plugins: ['eslint-plugin-import-helpers'],
+  plugins: ['eslint-plugin-import-helpers', '@tanstack/eslint-plugin-query'],
   rules: {
     'import-helpers/order-imports': [
       'warn',

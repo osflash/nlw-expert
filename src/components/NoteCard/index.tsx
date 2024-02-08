@@ -6,15 +6,30 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { XIcon } from 'lucide-react'
+import { useQueryClient } from '@tanstack/react-query'
+import { Note, createNote } from '~/services/storage'
 
 interface NoteCardProps {
-  note: {
-    date: Date
-    content: string
-  }
+  note: Note
 }
 
 export const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
+  const queryClient = useQueryClient()
+
+  const onNoteDeleted = (id: string) => {
+    const notesArray = queryClient
+      .getQueryData<Note[]>(['notes'])
+      ?.filter(note => {
+        return note.id !== id
+      })
+
+    if (!notesArray) return
+
+    queryClient.setQueryData<Note[]>(['notes'], notesArray)
+
+    createNote(notesArray)
+  }
+
   const formatDate = formatDistanceToNow(note.date, {
     locale: ptBR,
     addSuffix: true
@@ -47,6 +62,7 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
 
           <button
             type="button"
+            onClick={() => onNoteDeleted(note.id)}
             className="group w-full bg-slate-800 py-4 text-center text-sm font-medium text-slate-300 outline-none"
           >
             Deseja{' '}

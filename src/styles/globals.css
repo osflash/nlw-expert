@@ -4,6 +4,6 @@
 
 @layer base {
   body {
-    @apply flex min-h-screen flex-col bg-slate-900 text-slate-50 antialiased max-xl:px-4;
+    @apply flex min-h-screen flex-col bg-slate-900 text-slate-50 antialiased;
   }
 }
